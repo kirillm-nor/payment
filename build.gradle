@@ -1,0 +1,49 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'io.kirmit.transfer'
+version '1.0-SNAPSHOT'
+
+subprojects {
+    version = '1.0-SNAPSHOT'
+}
+
+configure(subprojects) {
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    group 'io.kirmit.transfer'
+
+    repositories {
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+    }
+
+    sourceCompatibility = 11
+}
+
+sourceCompatibility = 11
+
+repositories {
+    jcenter()
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
