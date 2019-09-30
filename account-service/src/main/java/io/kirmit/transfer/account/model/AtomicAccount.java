@@ -15,6 +15,12 @@ public class AtomicAccount implements HasId<UUID> {
         this.balance = BigDecimal.ZERO;
     }
 
+    public AtomicAccount(UUID id, BigDecimal balance) {
+        this.id = id;
+        BALANCE_UPDATE.set(this, balance);
+    }
+
+
     public boolean setBalance(BigDecimal expected, BigDecimal balance) {
         return BALANCE_UPDATE.compareAndSet(this, expected, balance);
     }

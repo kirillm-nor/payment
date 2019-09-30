@@ -1,15 +1,17 @@
 package io.kirmit.transfer.account;
 
+import io.kirmit.transfer.account.model.Account;
 import io.kirmit.transfer.account.service.SyncAccountService;
+import java.math.BigDecimal;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@State(Scope.Thread)
-@Warmup(iterations = 15, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 15, time = 1, timeUnit = TimeUnit.SECONDS)
+@State(Scope.Benchmark)
+@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(
         value = 1,
         jvmArgs = {
@@ -27,18 +29,27 @@ import java.util.concurrent.TimeUnit;
         }
 )
 @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class SyncServiceBenchmark {
 
-    private final SyncAccountService service = new SyncAccountService();
-    private final UUID id = UUID.randomUUID();
+    private SyncAccountService service;
+    private final UUID firstId = UUID.randomUUID();
+    private final UUID secondId = UUID.randomUUID();
 
-    @Setup
+    @Setup(Level.Iteration)
     public void setup() {
+        service = new SyncAccountService();
+        service.addAccount(new Account(firstId, BigDecimal.valueOf(1000000000)));
+        service.addAccount(new Account(secondId, BigDecimal.valueOf(1000000000)));
     }
 
     @Benchmark
     public void findService(Blackhole blackhole) {
-        blackhole.consume(service.findAccount(id));
+        blackhole.consume(service.findAccount(firstId));
+    }
+
+    @Benchmark
+    public void transfer() {
+        service.transferMoney(firstId, secondId, BigDecimal.ONE);
     }
 }

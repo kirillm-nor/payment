@@ -12,6 +12,11 @@ public final class Account implements HasId<UUID> {
         this.balance = BigDecimal.ZERO;
     }
 
+    public Account(UUID id, BigDecimal balance) {
+        this.id = id;
+        this.balance = balance;
+    }
+
     public UUID getId() {
         return id;
     }

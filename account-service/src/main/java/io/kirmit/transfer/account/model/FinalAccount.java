@@ -7,6 +7,11 @@ public final class FinalAccount implements HasId<UUID> {
     private final UUID id;
     private final BigDecimal balance;
 
+    public FinalAccount(UUID id) {
+        this.id = id;
+        this.balance = BigDecimal.ZERO;
+    }
+
     public FinalAccount(UUID id, BigDecimal balance) {
         this.id = id;
         this.balance = balance;

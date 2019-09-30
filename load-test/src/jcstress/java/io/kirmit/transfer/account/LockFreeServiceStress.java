@@ -1,27 +1,29 @@
 package io.kirmit.transfer.account;
 
-import io.kirmit.transfer.account.model.Account;
-import io.kirmit.transfer.account.service.SyncAccountService;
+import static org.openjdk.jcstress.annotations.Expect.ACCEPTABLE;
+
+import io.kirmit.transfer.account.model.AtomicAccount;
+import io.kirmit.transfer.account.service.LockFreeAccountService;
 import java.math.BigDecimal;
 import java.util.UUID;
-import org.openjdk.jcstress.annotations.*;
+import org.openjdk.jcstress.annotations.Actor;
+import org.openjdk.jcstress.annotations.Arbiter;
+import org.openjdk.jcstress.annotations.JCStressTest;
+import org.openjdk.jcstress.annotations.Outcome;
+import org.openjdk.jcstress.annotations.State;
 import org.openjdk.jcstress.infra.results.II_Result;
-import org.openjdk.jcstress.infra.results.I_Result;
-
-import static org.openjdk.jcstress.annotations.Expect.ACCEPTABLE;
-import static org.openjdk.jcstress.annotations.Expect.ACCEPTABLE_INTERESTING;
 
 @JCStressTest
 @Outcome(id = "1, 2", expect = ACCEPTABLE,  desc = "Both updates.")
-public class SyncServiceStress {
+public class LockFreeServiceStress {
 
     @State
     public static class ServiceState {
         private final UUID firstId = UUID.randomUUID();
         private final UUID secondId = UUID.randomUUID();
-        private final SyncAccountService service = new SyncAccountService() {{
-            addAccount(new Account(firstId, BigDecimal.valueOf(2)));
-            addAccount(new Account(secondId, BigDecimal.valueOf(1)));
+        private final LockFreeAccountService service = new LockFreeAccountService() {{
+            addAccount(new AtomicAccount(firstId, BigDecimal.valueOf(2)));
+            addAccount(new AtomicAccount(secondId, BigDecimal.valueOf(1)));
         }};
     }
 
