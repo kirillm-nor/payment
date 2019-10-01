@@ -1,0 +1,13 @@
+wrk -t4 -c1200 -d30s -s wrk/account_post.lua http://localhost:4567/api/v1/account
+
+```
+Running 30s test @ http://localhost:4567/api/v1/account
+  4 threads and 1200 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    71.31ms   17.99ms 178.26ms   73.74%
+    Req/Sec   650.04    153.35     1.32k    72.50%
+  77671 requests in 30.03s, 16.52MB read
+  Socket errors: connect 0, read 2291, write 0, timeout 0
+Requests/sec:   2586.44
+Transfer/sec:    563.44KB
+```
