@@ -6,6 +6,9 @@ import io.kirmit.transfer.account.repository.FinalAccountRepository;
 import java.lang.invoke.VarHandle;
 import java.math.BigDecimal;
 
+/**
+ * Balance update is using final account structure and merge sync in repository
+ */
 public class MergeAccountService extends AbstractAccountService<FinalAccount> {
 
     private final FinalAccountRepository finalRepository;

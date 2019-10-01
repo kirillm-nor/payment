@@ -1,3 +1,5 @@
+Based on a JMH plain sync is fastest than other hypothesis.
+
 wrk -t4 -c1200 -d30s -s wrk/account_post.lua http://localhost:4567/api/v1/account
 
 ```

@@ -6,6 +6,13 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service abstraction to validate a few hypothesis:
+ *  - LockFree
+ *  - Merge in repository
+ *  - Play sync locking
+ * @param <T>
+ */
 public abstract class AbstractAccountService<T extends HasId<UUID>> {
 
     public static final String ACCOUNT_ID_IS_NULL = "Account id is null";

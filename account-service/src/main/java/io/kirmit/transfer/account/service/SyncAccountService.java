@@ -5,6 +5,9 @@ import io.kirmit.transfer.account.model.exception.InsufficientFundsException;
 import io.kirmit.transfer.account.repository.SimpleAccountRepository;
 import java.math.BigDecimal;
 
+/**
+ * Plain sync locking
+ */
 public class SyncAccountService extends AbstractAccountService<Account> {
 
     private final transient Object lock = new Object();

@@ -6,6 +6,9 @@ import io.kirmit.transfer.account.repository.AtomicAccountRepository;
 import java.lang.invoke.VarHandle;
 import java.math.BigDecimal;
 
+/**
+ * Lockfree balance update, based on Atomic*FieldsUpdater
+ */
 public class LockFreeAccountService extends AbstractAccountService<AtomicAccount> {
 
     public LockFreeAccountService() {
