@@ -11,8 +11,8 @@ buildscript {
 }
 
 plugins {
-    id "me.champeau.gradle.jmh" version "0.4.8"
     id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id "me.champeau.gradle.jmh" version "0.4.8"
 }
 
 apply plugin: 'jcstress'
@@ -31,6 +31,11 @@ jcstress {
 
 jmhJar {
     exclude 'LICENSE'
+}
+
+jmh {
+    //profilers = ["dtraceasm"]
+    jvmArgs = ["-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+TrustFinalNonStaticFields", "-XX:-UseBiasedLocking","-XX:+UnlockDiagnosticVMOptions","-XX:+PrintAssembly"]
 }
 
 shadowJar {

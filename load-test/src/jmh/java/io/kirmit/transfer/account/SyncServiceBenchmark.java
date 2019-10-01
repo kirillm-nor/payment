@@ -9,26 +9,21 @@ import org.openjdk.jmh.infra.Blackhole;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@State(Scope.Benchmark)
+@State(Scope.Thread)
 @Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(
         value = 1,
         jvmArgs = {
                 "-server",
-                "-Xms2g",
-                "-Xmx2g",
-                "-XX:NewSize=1g",
-                "-XX:MaxNewSize=1g",
-                "-XX:InitialCodeCacheSize=512m",
-                "-XX:ReservedCodeCacheSize=512m",
-                "-XX:+UseParallelGC",
                 "-XX:+UnlockExperimentalVMOptions",
                 "-XX:+TrustFinalNonStaticFields",
-                "-XX:-UseBiasedLocking"
+                "-XX:-UseBiasedLocking",
+                "-XX:+UnlockDiagnosticVMOptions",
+                "-XX:+PrintAssembly"
         }
 )
-@BenchmarkMode({Mode.Throughput, Mode.AverageTime})
+@BenchmarkMode({Mode.Throughput})
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class SyncServiceBenchmark {
 
@@ -41,11 +36,6 @@ public class SyncServiceBenchmark {
         service = new SyncAccountService();
         service.addAccount(new Account(firstId, BigDecimal.valueOf(1000000000)));
         service.addAccount(new Account(secondId, BigDecimal.valueOf(1000000000)));
-    }
-
-    @Benchmark
-    public void findService(Blackhole blackhole) {
-        blackhole.consume(service.findAccount(firstId));
     }
 
     @Benchmark
