@@ -1,7 +1,6 @@
 rootProject.name = 'payment'
 
 include 'account-service'
-include 'account-actors-service'
 include 'payment-spark-http'
 include 'load-test'
 
