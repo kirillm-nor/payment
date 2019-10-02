@@ -30,7 +30,7 @@ public class TransferRoute extends AllDirectives {
                             }
                             CompletableFuture<Void> cf = CompletableFuture.runAsync(() ->
                                     service.transferMoney(transfer.getFrom(), transfer.getTo(), transfer.getAmount()));
-                            return onSuccess(cf, v -> complete(StatusCodes.OK));
+                            return onSuccess(cf, v -> complete(StatusCodes.NO_CONTENT));
                         })
                 )
         );

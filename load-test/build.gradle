@@ -43,8 +43,7 @@ jmh {
             "-XX:+UnlockExperimentalVMOptions",
             "-XX:+TrustFinalNonStaticFields",
             "-XX:-UseBiasedLocking",
-            "-XX:+UnlockDiagnosticVMOptions",
-            "-XX:+PrintAssembly"
+            "-XX:+UnlockDiagnosticVMOptions"
     ]
 }
 

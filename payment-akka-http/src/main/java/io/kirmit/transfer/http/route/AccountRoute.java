@@ -26,7 +26,7 @@ public class AccountRoute extends AllDirectives {
     }
 
     public Route route() {
-        return path("account",
+        return pathPrefix("account",
                 () ->
                         concat(
                                 get(() ->
@@ -39,12 +39,16 @@ public class AccountRoute extends AllDirectives {
                                 ),
                                 post(() ->
                                         entity(Jackson.unmarshaller(CreateAccountRequest.class), account -> {
-                                            CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
+                                            if (account.getBalance().signum() < 0) {
+                                                return complete(StatusCodes.BAD_REQUEST);
+                                            }
+                                            CompletableFuture<Account> cf = CompletableFuture.supplyAsync(() -> {
                                                 Account acc = new Account(UUID.randomUUID(), account.getBalance());
                                                 service.addAccount(acc);
                                                 LOGGER.debug("Account created {}", acc);
+                                                return acc;
                                             });
-                                            return onSuccess(cf, v -> complete(StatusCodes.CREATED));
+                                            return onSuccess(cf, v -> complete(StatusCodes.CREATED, v, Jackson.marshaller()));
                                         })
                                 )
                         )

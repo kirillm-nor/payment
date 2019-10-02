@@ -13,3 +13,16 @@ Running 30s test @ http://localhost:4567/api/v1/account
 Requests/sec:   2586.44
 Transfer/sec:    563.44KB
 ```
+
+```
+Running 30s test @ http://localhost:4567/api/v1/account
+  4 threads and 1200 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    48.92ms   54.91ms 501.04ms   86.10%
+    Req/Sec     4.67k     1.40k    8.74k    70.10%
+  555282 requests in 30.03s, 104.85MB read
+  Socket errors: connect 0, read 1705, write 0, timeout 0
+Requests/sec:  18492.33
+Transfer/sec:      3.49MB
+
+```

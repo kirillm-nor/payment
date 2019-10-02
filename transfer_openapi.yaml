@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Transfer Open API
+  description: Test.
+
+servers:
+  - url: http://127.0.0.1:4567/api/v1
+    description: Local server
+
+paths:
+  /account:
+    post:
+      summary: Create payment account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '400':
+          description: Invalid input
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /account/{id}:
+    get:
+      summary: Ge user account
+      operationId: getAccount
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+        '404':
+          description: Corresponding account is absent
+
+  /transfer:
+    post:
+      summary: Transfer money
+      operationId: transferMoney
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+      responses:
+        '204':
+          description: Transfer completed
+
+components:
+  schemas:
+    CreateAccountRequest:
+      type: object
+      required:
+        - balance
+      properties:
+        balance:
+          type: number
+          format: float
+
+    AccountResponse:
+      type: object
+      required:
+        - balance
+        - id
+      properties:
+        balance:
+          type: number
+          format: float
+        id:
+          type: string
+          format: uuid
+
+    TransferRequest:
+      type: object
+      required:
+        - from
+        - to
+        - amount
+      properties:
+        from:
+          type: string
+          format: uuid
+        to:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          format: float
+
