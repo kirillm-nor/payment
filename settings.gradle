@@ -3,4 +3,5 @@ rootProject.name = 'payment'
 include 'account-service'
 include 'payment-spark-http'
 include 'load-test'
+include 'payment-akka-http'
 
